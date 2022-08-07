@@ -29,7 +29,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/audiowideregular"
-                android:text="SIPANU"
+                android:text="SIA IPNU"
                 android:textColor="@color/white"
                 android:textSize="45dp"
                 android:textStyle="bold" />
@@ -50,7 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_si"
             android:layout_centerInParent="true"
-            android:text="Sistem Pendaftaran IPNU"
+            android:gravity="center"
+            android:text="Sistem Informasi Administrasi IPNU \n IPPNU"
             android:textColor="@color/white"
             android:textSize="18dp"
             android:textStyle="bold" />
