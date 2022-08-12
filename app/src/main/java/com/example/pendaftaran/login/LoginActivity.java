@@ -1,5 +1,7 @@
 package com.example.pendaftaran.login;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.TargetApi;
@@ -8,27 +10,50 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.pendaftaran.MainActivity;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.pendaftaran.R;
+import com.example.pendaftaran.Services.Preferences;
+import com.example.pendaftaran.Services.Service;
 import com.example.pendaftaran.dashboard.DashboardActivity;
-import com.google.android.material.animation.DrawableAlphaProperty;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    EditText username, password;
+    Snackbar snackbar;
+    Preferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        preferences = new Preferences(this);
         setStatusBarGradiant(LoginActivity.this);
         getSupportActionBar().hide();
         TextView login = findViewById(R.id.tvlogin);
+        password = findViewById(R.id.et_password);
+        username = findViewById(R.id.et_username);
+
+
+        if (preferences.getStatusLogin()) {
+            this.finish();
+            startActivity(new Intent(LoginActivity.this, DashboardActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+        }
 
         login.setOnClickListener(this);
     }
@@ -37,8 +62,66 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvlogin:
-                startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                cekdata(v);
         }
+    }
+
+    private void cekdata(View v) {
+        String user = username.getText().toString();
+        String pass = password.getText().toString();
+        if (user.equals("") || pass.equals("")) {
+            snackbar = Snackbar
+                    .make(v, "Lengkapi data terlebih dahulu", Snackbar.LENGTH_LONG);
+            snackbar.show();
+
+        } else {
+            prosesLogin(v, user, pass);
+        }
+    }
+
+    private void prosesLogin(View v, String user, String pass) {
+
+        AndroidNetworking.post(Service.URL + Service.login)
+                .addBodyParameter("level", "2")
+                .addBodyParameter("username", user)
+                .addBodyParameter("password", pass)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.get("msg").equals("data ditemukan")) {
+
+                                String iduser = response.getJSONObject("data").getString("user_id");
+                                String nama = response.getJSONObject("data").getString("nama");
+                                preferences.saveBoolean(Preferences.statuslogin, true);
+                                preferences.saveString(Preferences.iduser, iduser);
+                                preferences.saveString(Preferences.namauser, nama);
+
+
+                                snackbar = Snackbar
+                                        .make(v, "Berhasil Login"+iduser, Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                                Log.d(TAG, "onResponse: "+iduser);
+
+                                startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                                finish();
+                            } else {
+                                snackbar = Snackbar
+                                        .make(v, "Gagal Login \n silahkan cek data anda", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(LoginActivity.this, "" + anError, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 

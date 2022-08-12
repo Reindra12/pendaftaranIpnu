@@ -8,7 +8,7 @@
 
 
     <androidx.core.widget.NestedScrollView
-
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F2F2F2">
@@ -146,6 +146,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearsurat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -169,20 +170,42 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-
-                        <TextView
-                            android:id="@+id/tvsuratkirim"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_upload"
-                            android:drawablePadding="5dp"
-                            android:fontFamily="@font/poppins"
+                            android:layout_gravity="center"
                             android:gravity="center"
-                            android:padding="15dp"
-                            android:text="Surat Terkirim"
-                            android:textColor="@color/content_text_color"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvjumlahterkirim"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/futura_medium"
+                                android:gravity="center"
+                                android:paddingTop="10dp"
+                                android:text="10"
+                                android:textColor="@color/content_text_color"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvsuratkirim"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_upload"
+                                android:drawablePadding="5dp"
+                                android:fontFamily="@font/poppins"
+                                android:gravity="center"
+                                android:paddingBottom="10dp"
+                                android:text="Surat Terkirim"
+                                android:textColor="@color/content_text_color"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -202,24 +225,83 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-
-                        <TextView
-                            android:id="@+id/tvsuratterima"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_terima"
-                            android:drawablePadding="5dp"
-                            android:fontFamily="@font/poppins"
+                            android:layout_gravity="center"
                             android:gravity="center"
-                            android:padding="15dp"
-                            android:text="Surat Diterima"
-                            android:textColor="@color/content_text_color"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvjumlahterima"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/futura_medium"
+                                android:gravity="center"
+                                android:paddingTop="10dp"
+                                android:text="10"
+                                android:textColor="@color/content_text_color"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvsuratterima"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_terima"
+                                android:drawablePadding="5dp"
+                                android:fontFamily="@font/poppins"
+                                android:gravity="center"
+                                android:paddingBottom="10dp"
+                                android:text="Surat Diterima"
+                                android:textColor="@color/content_text_color"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/linearsurat"
+               >
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:paddingBottom="10dp"
+                    android:text="Sekarang"
+                    android:textColor="@color/content_text_color"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/appbarlayout"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvsurat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="10dp"
+
+                    tools:listitem="@layout/item_listsurat" />
+
+                </androidx.core.widget.NestedScrollView>
 
             </LinearLayout>
 
@@ -229,9 +311,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:gravity="bottom|end"
-        android:layout_height="match_parent">
+        android:gravity="bottom|end">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -240,7 +322,6 @@
             android:layout_marginStart="90dp"
             android:layout_marginTop="90dp"
             android:layout_marginEnd="10dp"
-
             android:layout_marginBottom="90dp"
             android:backgroundTint="@color/white"
             android:contentDescription="Surat"

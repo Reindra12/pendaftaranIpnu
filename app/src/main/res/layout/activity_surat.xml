@@ -6,221 +6,241 @@
     android:layout_height="match_parent"
     tools:context=".Surat.SuratActivity">
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <!--            <TextView-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="match_parent"-->
-            <!--                android:layout_marginLeft="10dp"-->
-            <!--                android:layout_marginTop="5dp"-->
-            <!--                android:layout_marginRight="10dp"-->
-            <!--                android:fontFamily="@font/poppins"-->
-            <!--                android:paddingBottom="10dp"-->
-            <!--                android:text="O"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textSize="12sp" />-->
-
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/etnomorsurat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/bg_round_border"
-                    android:ems="10"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="top"
-                    android:hint="Masukan Nomor Surat "
-                    android:inputType="textAutoCorrect"
-                    android:maxLines="1"
-                    android:padding="15dp"
-                    android:textSize="14sp"
-                    tools:ignore="Autofill" />
-
-                <requestFocus />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/ettglsurat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/bg_round_border"
-                    android:ems="10"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="top"
-                    android:hint="Tanggal Kelar"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:padding="15dp"
-                    android:textSize="14sp"
-                    tools:ignore="Autofill" />
-
-                <requestFocus />
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/etpengirim"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/bg_round_border"
-                    android:ems="10"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="top"
-                    android:hint="Pengirim"
-                    android:inputType="textAutoCorrect"
-                    android:maxLines="1"
-                    android:padding="15dp"
-                    android:textSize="14sp"
-                    tools:ignore="Autofill" />
-
-                <requestFocus />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/bg_round_border">
-
-                <Spinner
-                    android:id="@+id/spinnerpenerima"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"></Spinner>
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/bg_round_border">
-
-                <Spinner
-                    android:id="@+id/spinnerperihalsurat"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"></Spinner>
-            </LinearLayout>
-
-            <requestFocus />
-
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/etpenerima"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/bg_round_border"
-                    android:ems="10"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="top"
-                    android:hint="Ringkasan Isi Surat"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:padding="15dp"
-                    android:textSize="14sp"
-                    tools:ignore="Autofill" />
-
-                <requestFocus />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:textStyle="bold"
-
-                    android:text="Pilih Foto" />
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="120dp"
-                    android:layout_height="130dp"
-                    android:background="@drawable/a" />
-
-            </LinearLayout>
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="bottom"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp">
 
-            <TextView
-                android:id="@+id/tvxAjukan"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:elevation="10dp"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Kirim Surat"
-                android:textColor="@color/green_active"
-                android:textSize="14sp" />
-        </RelativeLayout>
-    </RelativeLayout>
+                android:orientation="vertical">
 
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:title="Surat" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/etnomorsurat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/bg_round_border"
+                        android:ems="10"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="top"
+                        android:hint="Masukan Nomor Surat "
+                        android:inputType="textAutoCorrect"
+                        android:maxLines="1"
+                        android:padding="15dp"
+                        android:textSize="14sp"
+                        tools:ignore="Autofill" />
+
+                    <requestFocus />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/ettglsurat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/bg_round_border"
+                        android:ems="10"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="top"
+                        android:hint="Tanggal Kelar"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="15dp"
+                        android:textSize="14sp"
+                        tools:ignore="Autofill" />
+
+                    <requestFocus />
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/etpengirim"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/bg_round_border"
+                        android:ems="10"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="top"
+                        android:hint="Pengirim"
+                        android:inputType="textAutoCorrect"
+                        android:maxLines="1"
+                        android:padding="15dp"
+                        android:textSize="14sp"
+                        tools:ignore="Autofill" />
+
+                    <requestFocus />
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bg_round_border">
+
+                    <Spinner
+                        android:id="@+id/spinnerpenerima"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"></Spinner>
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bg_round_border">
+
+                    <Spinner
+                        android:id="@+id/spinnersifatsurat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"></Spinner>
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bg_round_border">
+
+                    <Spinner
+                        android:id="@+id/spinnerperihalsurat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"></Spinner>
+                </LinearLayout>
+
+                <requestFocus />
+
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/et_isi"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/bg_round_border"
+                        android:ems="10"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="top"
+                        android:hint="Ringkasan Isi Surat"
+                        android:inputType="textAutoCorrect"
+                        android:maxLines="1"
+                        android:padding="15dp"
+                        android:textSize="14sp"
+                        tools:ignore="Autofill" />
+
+                    <requestFocus />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Pilih Foto"
+
+                        android:textStyle="bold" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/img_surat"
+                        android:layout_width="250dp"
+                        android:layout_height="300dp"
+                        android:src="@drawable/ic_camera_24" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnkirim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/capsule_gradient"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:text="Kirim"
+
+                    android:textColor="@color/Titele_AA_Light" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,23 +1,44 @@
 package com.example.pendaftaran.dashboard;
 
+import static android.content.ContentValues.TAG;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.pendaftaran.R;
+import com.example.pendaftaran.Services.Preferences;
+import com.example.pendaftaran.Services.Service;
 import com.example.pendaftaran.Surat.SuratActivity;
+import com.example.pendaftaran.dashboard.Model.SuratKeluarItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +55,12 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     int[] sampleImages = {R.drawable.a, R.drawable.b, R.drawable.c};
     CarouselView banner;
     FloatingActionButton pesanbaru;
+    RecyclerView recyclerViewsurat;
+    String iduser;
+    Preferences preferences;
+    ArrayList<SuratKeluarItem> suratKeluarItems = new ArrayList<>();
+    DashboardSuratAdapter dashboardSuratAdapter;
+    TextView jumlahsuratkirim, jumlahsuratterima;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -80,13 +107,97 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
         banner = view.findViewById(R.id.banner);
         pesanbaru = view.findViewById(R.id.fab);
+        recyclerViewsurat = view.findViewById(R.id.rvsurat);
+        jumlahsuratkirim = view.findViewById(R.id.tvjumlahterkirim);
+        jumlahsuratterima = view.findViewById(R.id.tvjumlahterima);
 
+        preferences = new Preferences(getContext());
 
         pesanbaru.setOnClickListener(this);
 //        banner.setPageCount(sampleImages.length);
         banner.setViewListener(viewListener);
         banner.setSlideInterval(3000);
 
+
+        iduser = preferences.getIduser();
+
+
+        prosesListSurat();
+        prosesJumlahSurat();
+
+    }
+
+    private void prosesJumlahSurat() {
+        AndroidNetworking.get(Service.URL + Service.totalsurat)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String keluar = response.getString("hitungkeluar");
+                            String masuk = response.getString("hitungmasuk");
+
+                            jumlahsuratkirim.setText(keluar);
+                            jumlahsuratterima.setText(masuk);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
+    }
+
+    private void prosesListSurat() {
+        AndroidNetworking.get(Service.URL + Service.listsuratkeluar + iduser)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d(TAG, "surat: " + response);
+
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("surat_keluar");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                SuratKeluarItem suratKeluarItem = new SuratKeluarItem();
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                suratKeluarItem.setNoSurat(jsonObject.getString("no_surat"));
+                                suratKeluarItem.setNamaPerihal(jsonObject.getString("nama_perihal"));
+                                suratKeluarItem.setNamaSifat(jsonObject.getString("nama_sifat"));
+                                suratKeluarItem.setNamaCabang(jsonObject.getString("nama_cabang"));
+                                suratKeluarItem.setTglKeluar(jsonObject.getString("tgl_keluar"));
+                                suratKeluarItem.setBerkasKeluar(jsonObject.getString("berkas_keluar"));
+
+
+                                suratKeluarItems.add(suratKeluarItem);
+
+                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                                recyclerViewsurat.setLayoutManager(layoutManager);
+
+                                dashboardSuratAdapter = new DashboardSuratAdapter(getContext(), suratKeluarItems);
+                                recyclerViewsurat.setAdapter(dashboardSuratAdapter);
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
     }
 
 
@@ -108,10 +219,13 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-    switch (view.getId()){
-        case R.id.fab:
-            Intent intent = new Intent(getContext(), SuratActivity.class);
-            startActivity(intent);
+        switch (view.getId()) {
+            case R.id.fab:
+                Intent intent = new Intent(getContext(), SuratActivity.class);
+                intent.putExtra("intent", "1");
+                startActivity(intent);
+
+        }
     }
-    }
+
 }

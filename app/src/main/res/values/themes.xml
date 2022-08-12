@@ -26,7 +26,10 @@
         <item name="android:textSize">25sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_down_dialog</item>
+    </style>
     <style name="ThemeOverlay.Pendaftaran.FullscreenContainer" parent="">
         <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
         <item name="fullscreenTextColor">@color/light_blue_A200</item>

@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/card_normal.xml" value="0.1435" />
+        <entry key="app/src/main/res/drawable-v24/ic_close.xml" value="0.1435" />
+        <entry key="app/src/main/res/drawable-v24/ic_open_folder.xml" value="0.1435" />
         <entry key="app/src/main/res/drawable/bg_round_border.xml" value="0.3185" />
         <entry key="app/src/main/res/drawable/capsule_gradient.xml" value="0.298" />
         <entry key="app/src/main/res/drawable/capsule_putih.xml" value="0.298" />
@@ -17,12 +20,18 @@
         <entry key="app/src/main/res/drawable/person_background_oval.xml" value="0.298" />
         <entry key="app/src/main/res/drawable/transition_background_drawable_home.xml" value="0.298" />
         <entry key="app/src/main/res/drawable/transition_background_drawable_person.xml" value="0.298" />
+        <entry key="app/src/main/res/layout/activity_camera.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.28541666666666665" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.32760416666666664" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3125" />
-        <entry key="app/src/main/res/layout/activity_surat.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_show_photo.xml" value="0.32708333333333334" />
+        <entry key="app/src/main/res/layout/activity_surat.xml" value="0.26509075559307727" />
+        <entry key="app/src/main/res/layout/camera_dialog.xml" value="0.2689183411714408" />
+        <entry key="app/src/main/res/layout/custom_listsurat.xml" value="0.26806327490380505" />
+        <entry key="app/src/main/res/layout/fragment_anggota.xml" value="0.2689183411714408" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.3602520045819015" />
         <entry key="app/src/main/res/layout/fragment_laporan.xml" value="0.13385416666666666" />
+        <entry key="app/src/main/res/layout/item_listsurat.xml" value="0.4835443037974684" />
         <entry key="app/src/main/res/layout/view_custom.xml" value="0.32760416666666664" />
       </map>
     </option>
