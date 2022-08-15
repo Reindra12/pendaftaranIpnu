@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
                         android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:text="Anggota" />
+                        android:text="Kegiatan" />
 
                     <TextView
                         style="@style/headerText"
