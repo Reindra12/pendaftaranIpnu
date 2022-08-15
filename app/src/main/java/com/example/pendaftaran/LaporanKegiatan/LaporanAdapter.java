@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pendaftaran.LaporanKegiatan.Model.LaporanItem;
 import com.example.pendaftaran.R;
+import com.example.pendaftaran.Services.Service;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -55,6 +58,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
 
     public class MyHolder extends RecyclerView.ViewHolder {
         TextView nama, tanggal, cabang, tempat;
+        ImageView fotolaporan;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +67,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
             tanggal = itemView.findViewById(R.id.tvtanggal);
             cabang = itemView.findViewById(R.id.tvcabang);
             tempat = itemView.findViewById(R.id.tvtempat);
+            fotolaporan = itemView.findViewById(R.id.imglaporan);
 
 
         }
