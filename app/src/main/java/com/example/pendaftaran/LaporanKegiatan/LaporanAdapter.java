@@ -37,7 +37,14 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
         holder.nama.setText(laporanItem.getNamaKegiatan());
         holder.tanggal.setText(laporanItem.getTgl());
         holder.tempat.setText(laporanItem.getTempat());
-        holder.cabang.setText(laporanItem.getCabangId());
+
+        String cabangid = laporanItem.getCabangId();
+        if (cabangid.equals("19")){
+            holder.cabang.setText("Cabang Kraksaan");
+
+        }
+
+        Picasso.get().load(Service.URLgambar+Service.gambarkegiatan+laporanItem.getFotoKegiatan()).into(holder.fotolaporan);
 
     }
 
