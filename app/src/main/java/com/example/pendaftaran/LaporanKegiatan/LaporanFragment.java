@@ -139,11 +139,11 @@ public class LaporanFragment extends Fragment {
                                 laporanItem.setFotoKegiatan(jsonObject.getString("foto_kegiatan"));
                                 laporanItem.setTempat(jsonObject.getString("tempat"));
                                 laporanItem.setCabangId(jsonObject.getString("cabang_id"));
-
+                                laporanItem.setFotoKegiatan(jsonObject.getString("foto_kegiatan"));
                                 laporanItems.add(laporanItem);
 
                             }
-                            
+
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                             LaporanAdapter laporanAdapter = new LaporanAdapter(laporanItems, getContext());
                             recyclerViewlaporan.setLayoutManager(layoutManager);
