@@ -45,6 +45,8 @@
 
     <color name="red_active">#f44336</color>
     <color name="purple_active">#9c27b0</color>
+    <color name="green_activeprimary">#4ECB71</color>
+    <color name="green_active_second">#A6F4BC</color>
     <color name="blue_active">#03a9f4</color>
     <color name="green_active">#4caf50</color>
     <color name="blue_grey_active">#607d8b</color>

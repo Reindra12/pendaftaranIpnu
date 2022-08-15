@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.pendaftaran.Anggota.AnggotaFragment;
+import com.example.pendaftaran.LaporanKegiatan.LaporanFragment;
 import com.example.pendaftaran.R;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
@@ -53,18 +54,24 @@ public class DashboardActivity extends AppCompatActivity {
 
                     case 1:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        sharedPreferences = getSharedPreferences("akun", MODE_PRIVATE);
-                        String id = sharedPreferences.getString("id", "");
-                        Toast.makeText(DashboardActivity.this, id, Toast.LENGTH_SHORT).show();
-                        if (id.equals("")) {
-                            fragmentTransaction.replace(R.id.fragment_container, new AnggotaFragment());
-                        } else {
-                            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                            startActivity(intent);
-                            finish();
-//
-                        }
+//                        sharedPreferences = getSharedPreferences("akun", MODE_PRIVATE);
+//                        String id = sharedPreferences.getString("id", "");
+//                        Toast.makeText(DashboardActivity.this, id, Toast.LENGTH_SHORT).show();
+//                        if (id.equals("")) {
+                            fragmentTransaction.replace(R.id.fragment_container, new LaporanFragment());
+//                        } else {
+//                            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+//                            startActivity(intent);
+//                            finish();
+////
+//                        }
 
+                        fragmentTransaction.commit();
+                        break;
+
+                    case 2:
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, new AnggotaFragment());
                         fragmentTransaction.commit();
                         break;
                 }

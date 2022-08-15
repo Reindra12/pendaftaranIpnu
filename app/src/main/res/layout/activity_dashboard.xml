@@ -33,16 +33,27 @@
             app:bt_shape="@drawable/transition_background_drawable_home"
             app:bt_title="@string/home" />
 
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/l_item_laporan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_colorActive="@color/green_activeprimary"
+            app:bt_colorInactive="@color/green_active"
+            app:bt_icon="@drawable/ic_laporan"
+            app:bt_shape="@drawable/transition_background_drawable_laporan"
+            app:bt_title="Kegiatan" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/l_item_profile"
+            android:id="@+id/l_item_anggota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bt_colorActive="@color/purple_active"
             app:bt_colorInactive="@color/purple_inactive"
             app:bt_icon="@drawable/ic_person"
             app:bt_shape="@drawable/transition_background_drawable_person"
-            app:bt_title="@string/profile" />
+            app:bt_title="Anggota" />
+
+
     </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

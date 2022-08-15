@@ -128,12 +128,13 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     }
 
     private void prosesJumlahSurat() {
-        AndroidNetworking.get(Service.URL + Service.totalsurat)
+        AndroidNetworking.get(Service.URL + Service.totalsurat+iduser)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+
                         try {
                             String keluar = response.getString("hitungkeluar");
                             String masuk = response.getString("hitungmasuk");
