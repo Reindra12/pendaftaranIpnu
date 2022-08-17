@@ -1,5 +1,6 @@
 package com.example.pendaftaran.LaporanKegiatan;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.example.pendaftaran.LaporanKegiatan.Model.LaporanItem;
 import com.example.pendaftaran.R;
 import com.example.pendaftaran.Services.Preferences;
 import com.example.pendaftaran.Services.Service;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +42,7 @@ public class LaporanFragment extends Fragment {
     Preferences preferences;
     ArrayList<LaporanItem> laporanItems = new ArrayList<>();
     TextView jumlahkeluar;
+    FloatingActionButton fabkegiatan;
 
 
     // TODO: Rename and change types of parameters
@@ -91,11 +94,22 @@ public class LaporanFragment extends Fragment {
         recyclerViewlaporan = view.findViewById(R.id.rvlaporan);
 
         jumlahkeluar = view.findViewById(R.id.tvjumlahlaporan);
+        fabkegiatan = view.findViewById(R.id.fabkegiatan);
         preferences = new Preferences(getContext());
         iduser = preferences.getIduser();
 
+
         dataLaporan();
         jumlahlaporan();
+
+        fabkegiatan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), LaporanKegiatanActivity.class);
+                intent.putExtra("iduser", iduser);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -139,7 +153,8 @@ public class LaporanFragment extends Fragment {
                                 laporanItem.setFotoKegiatan(jsonObject.getString("foto_kegiatan"));
                                 laporanItem.setTempat(jsonObject.getString("tempat"));
                                 laporanItem.setCabangId(jsonObject.getString("cabang_id"));
-                                laporanItem.setFotoKegiatan(jsonObject.getString("foto_kegiatan"));
+                                laporanItem.setKeterangan(jsonObject.getString("keterangan"));
+
                                 laporanItems.add(laporanItem);
 
                             }

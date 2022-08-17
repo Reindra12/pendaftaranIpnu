@@ -12,8 +12,8 @@
         android:type="radial"
         android:gradientRadius="10dp"
         android:angle="0"
-        android:startColor="#00897B"
-        android:endColor="#00897B" />
+        android:startColor="@color/green_active"
+        android:endColor="@color/green_active" />
 
     <padding
         android:bottom="0dp"

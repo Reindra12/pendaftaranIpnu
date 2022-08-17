@@ -1,6 +1,7 @@
 package com.example.pendaftaran.LaporanKegiatan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pendaftaran.DetailKegiatan.DetailKegiatanActivity;
 import com.example.pendaftaran.LaporanKegiatan.Model.LaporanItem;
 import com.example.pendaftaran.R;
 import com.example.pendaftaran.Services.Service;
@@ -40,14 +43,31 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
         holder.nama.setText(laporanItem.getNamaKegiatan());
         holder.tanggal.setText(laporanItem.getTgl());
         holder.tempat.setText(laporanItem.getTempat());
+        String keterangan = laporanItem.getKeterangan();
 
         String cabangid = laporanItem.getCabangId();
+        String gambar = Service.URLgambar+Service.gambarkegiatan+laporanItem.getFotoKegiatan();
         if (cabangid.equals("19")){
             holder.cabang.setText("Cabang Kraksaan");
 
         }
 
-        Picasso.get().load(Service.URLgambar+Service.gambarkegiatan+laporanItem.getFotoKegiatan()).into(holder.fotolaporan);
+        Picasso.get().load(gambar).into(holder.fotolaporan);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailKegiatanActivity.class);
+                intent.putExtra("nama", laporanItem.getNamaKegiatan());
+                intent.putExtra("tanggal", laporanItem.getTgl());
+                intent.putExtra("tempat", laporanItem.getTempat());
+                intent.putExtra("cabang", "Cabang Kraksaan");
+                intent.putExtra("gambar", gambar);
+                intent.putExtra("keterangan", keterangan);
+                context.startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -59,6 +79,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
     public class MyHolder extends RecyclerView.ViewHolder {
         TextView nama, tanggal, cabang, tempat;
         ImageView fotolaporan;
+        CardView cardView;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +89,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
             cabang = itemView.findViewById(R.id.tvcabang);
             tempat = itemView.findViewById(R.id.tvtempat);
             fotolaporan = itemView.findViewById(R.id.imglaporan);
+            cardView = itemView.findViewById(R.id.cvkegiatan);
 
 
         }

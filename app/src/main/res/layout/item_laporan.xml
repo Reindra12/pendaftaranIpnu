@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cvbarang"
+        android:id="@+id/cvkegiatan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -53,7 +53,7 @@
                         android:text="Rapat"
                         android:textAppearance="?android:textAppearanceSmall"
                         android:textColor="#000"
-                        android:textSize="12dp" />
+                        android:textSize="14sp" />
 
 
                     <TextView
@@ -82,11 +82,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:text="Alamat"
-                        android:fontFamily="@font/bariol_regular"
+                        android:fontFamily="@font/bariol_bold"
                         android:paddingBottom="5dp"
                         android:textAppearance="?android:textAppearanceSmall"
                         android:textColor="#000"
-                        android:textSize="12dp" />
+                        android:textSize="14sp" />
 
 
                     <TextView

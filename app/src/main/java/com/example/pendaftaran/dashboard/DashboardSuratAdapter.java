@@ -1,6 +1,7 @@
 package com.example.pendaftaran.dashboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pendaftaran.DetailSurat.DetailSuratActivity;
 import com.example.pendaftaran.R;
 import com.example.pendaftaran.Services.Service;
 import com.example.pendaftaran.dashboard.Model.SuratKeluarItem;
@@ -44,8 +47,27 @@ public class DashboardSuratAdapter extends RecyclerView.Adapter<DashboardSuratAd
         holder.tanggal.setText(suratKeluarItem.getTglKeluar());
         holder.perihal.setText(suratKeluarItem.getNamaPerihal());
         holder.sifat.setText(suratKeluarItem.getNamaSifat());
-        Picasso.get().load(Service.gambarsurat + suratKeluarItem.getBerkasKeluar())
+        String foto = Service.URLgambar+Service.gambarsurat+suratKeluarItem.getBerkasKeluar();
+        String isi = suratKeluarItem.getIsi();
+        Picasso.get().load(foto)
                 .into(holder.gambarsurat);
+
+        holder.cardViewsurat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailSuratActivity.class);
+                intent.putExtra("nosurat", suratKeluarItem.getNoSurat());
+                intent.putExtra("tglsurat", suratKeluarItem.getTglKeluar());
+                intent.putExtra("perihal", suratKeluarItem.getNamaPerihal());
+                intent.putExtra("sifat", suratKeluarItem.getNamaSifat());
+                intent.putExtra("nosurat", suratKeluarItem.getNoSurat());
+                intent.putExtra("gambarsurat", foto);
+                intent.putExtra("isi", isi);
+                context.startActivity(intent);
+
+            }
+
+        });
 
     }
 
@@ -53,6 +75,7 @@ public class DashboardSuratAdapter extends RecyclerView.Adapter<DashboardSuratAd
     public class MyHolder extends RecyclerView.ViewHolder {
         TextView nomor, tanggal, perihal, sifat;
         ImageView gambarsurat;
+        CardView cardViewsurat;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +85,7 @@ public class DashboardSuratAdapter extends RecyclerView.Adapter<DashboardSuratAd
             perihal = itemView.findViewById(R.id.tv_perihal);
             sifat = itemView.findViewById(R.id.tv_sifat);
             gambarsurat = itemView.findViewById(R.id.imgsurat);
+            cardViewsurat = itemView.findViewById(R.id.cvbarang);
 
         }
     }

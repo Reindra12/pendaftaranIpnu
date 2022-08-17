@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#00897B"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#00897B">
 
     <RelativeLayout
         android:id="@+id/title"
@@ -72,13 +72,13 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="Login"
+            android:text="Daftar"
             android:textColor="@color/colorAccent"
             android:textSize="30dp"
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ly_username"
+            android:id="@+id/ly_nama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_title"
@@ -87,11 +87,30 @@
             android:layout_marginRight="25dp">
 
             <EditText
+                android:id="@+id/et_nama"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Nama Lengkap"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ly_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ly_nama"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="25dp">
+
+            <EditText
                 android:id="@+id/et_username"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Username"
                 android:inputType="text" />
+
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,11 +133,31 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tvlogin"
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ly_alamat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ly_password"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="25dp">
+
+            <EditText
+                android:id="@+id/et_alamat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Alamat"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvdaftar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ly_alamat"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="50dp"
             android:layout_marginRight="25dp"
@@ -127,36 +166,11 @@
             android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Masuk"
+            android:text="Daftar"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="25dp"
-            android:layout_marginBottom="5dp"
-            android:layout_below="@+id/tvlogin"
-            android:weightSum="2">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Belum memiliki akun?"
-                android:textColor="@color/blackSoft"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvdaftar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text=" Daftar"
-                android:textColor="@color/green_active"
-                android:textSize="12sp" />
-        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

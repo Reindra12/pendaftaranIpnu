@@ -3,6 +3,8 @@ package com.example.pendaftaran.dashboard;
 import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -30,6 +32,7 @@ import com.example.pendaftaran.Services.Preferences;
 import com.example.pendaftaran.Services.Service;
 import com.example.pendaftaran.Surat.SuratActivity;
 import com.example.pendaftaran.dashboard.Model.SuratKeluarItem;
+import com.example.pendaftaran.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
@@ -60,7 +63,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     Preferences preferences;
     ArrayList<SuratKeluarItem> suratKeluarItems = new ArrayList<>();
     DashboardSuratAdapter dashboardSuratAdapter;
-    TextView jumlahsuratkirim, jumlahsuratterima;
+    TextView jumlahsuratkirim, jumlahsuratterima, nama, keluar;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -110,6 +113,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         recyclerViewsurat = view.findViewById(R.id.rvsurat);
         jumlahsuratkirim = view.findViewById(R.id.tvjumlahterkirim);
         jumlahsuratterima = view.findViewById(R.id.tvjumlahterima);
+        nama = view.findViewById(R.id.tvnama);
+        keluar = view.findViewById(R.id.tvkeluar);
 
         preferences = new Preferences(getContext());
 
@@ -119,6 +124,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         banner.setSlideInterval(3000);
 
 
+        keluar.setOnClickListener(this);
+        nama.setText(preferences.getNamauser());
         iduser = preferences.getIduser();
 
 
@@ -176,6 +183,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                                 suratKeluarItem.setNamaCabang(jsonObject.getString("nama_cabang"));
                                 suratKeluarItem.setTglKeluar(jsonObject.getString("tgl_keluar"));
                                 suratKeluarItem.setBerkasKeluar(jsonObject.getString("berkas_keluar"));
+                                suratKeluarItem.setIsi(jsonObject.getString("isi"));
 
 
                                 suratKeluarItems.add(suratKeluarItem);
@@ -225,8 +233,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                 Intent intent = new Intent(getContext(), SuratActivity.class);
                 intent.putExtra("intent", "1");
                 startActivity(intent);
+                break;
+            case R.id.tvkeluar:
+             dialogKeluar();
 
         }
+    }
+
+    private void dialogKeluar() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Peringatan");
+        alertDialog.setIcon(R.drawable.ic_laporan_icon);
+        alertDialog.setMessage("Apakah anda mau keluar?")
+                .setCancelable(false)
+                .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //go to activity
+                        Intent intent1 = new Intent(getContext(), LoginActivity.class);
+                        preferences.saveString(Preferences.iduser, "");
+                        preferences.saveBoolean(Preferences.statuslogin, false);
+                        startActivity(intent1);
+                        getActivity().finish();
+                    }
+
+                });
+        alertDialog.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.create().show();
+
     }
 
 }

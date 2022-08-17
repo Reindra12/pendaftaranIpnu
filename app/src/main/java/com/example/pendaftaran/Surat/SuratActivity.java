@@ -296,8 +296,7 @@ public class SuratActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
             case R.id.img_surat:
-//                tampilkameradialog();
-                pilihgalery();
+                pilihfoto();
 
         }
     }
@@ -315,7 +314,7 @@ public class SuratActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-    private void pilihgalery() {
+    private void pilihfoto() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
@@ -345,11 +344,11 @@ public class SuratActivity extends AppCompatActivity implements View.OnClickList
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
             try {
-                Toast.makeText(this, "tiga", Toast.LENGTH_SHORT).show();
+
                 Uri uri = data.getData();
                 path = getRealPathFromUri(getApplicationContext(), uri);
 
-                Toast.makeText(this, path + "", Toast.LENGTH_SHORT).show();
+
 // ===== tampil foto
                 bitmapsurat = BitmapFactory.decodeFile(path);
                 RotateImage(bitmapsurat);
@@ -457,7 +456,7 @@ public class SuratActivity extends AppCompatActivity implements View.OnClickList
         return imageFile;
     }
     private void uploadSurat() {
-        Toast.makeText(this, "proses", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "proses", Toast.LENGTH_SHORT).show();
         File file = persistImage(bitmapsurat, "surat");
         AndroidNetworking.upload(Service.URL+Service.suratkeluar)
                 .addMultipartParameter("no_surat",snomor)
@@ -519,19 +518,4 @@ public class SuratActivity extends AppCompatActivity implements View.OnClickList
         pengirim.setText(savedInstanceState.getString("pengirim"));
         isi.setText(savedInstanceState.getString("isi"));
     }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPrefs = getSharedPreferences("surat", MODE_PRIVATE);
-        SharedPreferences.Editor editor = mPrefs.edit();
-        editor.putString("nosurat", nomorsurat.getText().toString());
-        editor.putString("pengirim", pengirim.getText().toString());
-        editor.putString("isi", isi.getText().toString());
-
-        editor.apply();
-        Toast.makeText(this, "destroy", Toast.LENGTH_SHORT).show();
-    }
-
 }

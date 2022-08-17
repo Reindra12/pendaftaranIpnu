@@ -171,6 +171,26 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom|end">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabkegiatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="90dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="Kegiatan"
+            android:src="@drawable/ic_laporan"
+            app:borderWidth="0dp"
+            app:elevation="6dp"
+            app:fabSize="normal" />
+    </RelativeLayout>
 
 </FrameLayout>

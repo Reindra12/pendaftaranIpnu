@@ -22,6 +22,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.pendaftaran.Daftar.DaftarActivity;
 import com.example.pendaftaran.R;
 import com.example.pendaftaran.Services.Preferences;
 import com.example.pendaftaran.Services.Service;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Snackbar snackbar;
     Preferences preferences;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password = findViewById(R.id.et_password);
         username = findViewById(R.id.et_username);
 
+        TextView daftar = findViewById(R.id.tvdaftar);
+        daftar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, DaftarActivity.class);
+                startActivity(intent);
+            }
+        });
 
         if (preferences.getStatusLogin()) {
             this.finish();

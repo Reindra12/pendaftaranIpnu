@@ -25,6 +25,17 @@ public class LaporanItem{
     @SerializedName("tgl")
     private String tgl;
 
+    @SerializedName("keterangan")
+    private String keterangan;
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
+    }
+
     public void setFotoKegiatan(String fotoKegiatan){
         this.fotoKegiatan = fotoKegiatan;
     }
