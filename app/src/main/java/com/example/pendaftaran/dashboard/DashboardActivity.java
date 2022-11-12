@@ -1,7 +1,6 @@
 package com.example.pendaftaran.dashboard;
 
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -20,23 +19,27 @@ import android.widget.Toast;
 import com.example.pendaftaran.Anggota.AnggotaFragment;
 import com.example.pendaftaran.LaporanKegiatan.LaporanFragment;
 import com.example.pendaftaran.R;
+import com.example.pendaftaran.Services.Preferences;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 
 public class DashboardActivity extends AppCompatActivity {
 
     private FragmentTransaction fragmentTransaction;
-    private SharedPreferences sharedPreferences;
+    private Preferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+
         setStatusBarGradiant(DashboardActivity.this);
         BubbleNavigationLinearView bubbleNavigationLinearView = findViewById(R.id.bottom_navigation_view_linear);
         bubbleNavigationLinearView.setBadgeValue(0, "30");
         bubbleNavigationLinearView.setBadgeValue(1, null); //invisible badge
+
+        preferences = new Preferences(this);
 
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -58,7 +61,7 @@ public class DashboardActivity extends AppCompatActivity {
 //                        String id = sharedPreferences.getString("id", "");
 //                        Toast.makeText(DashboardActivity.this, id, Toast.LENGTH_SHORT).show();
 //                        if (id.equals("")) {
-                            fragmentTransaction.replace(R.id.fragment_container, new LaporanFragment());
+                        fragmentTransaction.replace(R.id.fragment_container, new LaporanFragment());
 //                        } else {
 //                            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
 //                            startActivity(intent);

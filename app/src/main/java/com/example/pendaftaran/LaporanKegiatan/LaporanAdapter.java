@@ -1,12 +1,15 @@
 package com.example.pendaftaran.LaporanKegiatan;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -24,10 +27,16 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
 
     ArrayList<LaporanItem> laporanItems = new ArrayList<>();
     Context context;
+    private ItemDelete mItemDelete;
 
-    public LaporanAdapter(ArrayList<LaporanItem> laporanItems, Context context) {
+    public LaporanAdapter(ArrayList<LaporanItem> laporanItems, Context context, ItemDelete itemDelete) {
         this.laporanItems = laporanItems;
         this.context = context;
+        this.mItemDelete = itemDelete;
+    }
+
+    public void addItemClickListener(ItemDelete listener) {
+        mItemDelete = listener;
     }
 
     @NonNull
@@ -37,13 +46,15 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
         return new MyHolder(view);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
         LaporanItem laporanItem = laporanItems.get(position);
         holder.nama.setText(laporanItem.getNamaKegiatan());
         holder.tanggal.setText(laporanItem.getTgl());
         holder.tempat.setText(laporanItem.getTempat());
         String keterangan = laporanItem.getKeterangan();
+        String idkegiatan = laporanItem.getKegiatanId();
 
         String cabangid = laporanItem.getCabangId();
         String gambar = Service.URLgambar+Service.gambarkegiatan+laporanItem.getFotoKegiatan();
@@ -69,17 +80,30 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
             }
         });
 
+        holder.linearhapus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mItemDelete != null){
+                    mItemDelete.onItemDelete(idkegiatan, position);
+                }
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
         return laporanItems.size();
     }
+    public interface ItemDelete {
+        void onItemDelete(String idkegiatan, int position);
+    }
 
     public class MyHolder extends RecyclerView.ViewHolder {
         TextView nama, tanggal, cabang, tempat;
         ImageView fotolaporan;
         CardView cardView;
+        LinearLayout linearhapus;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,8 +114,15 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyHolder
             tempat = itemView.findViewById(R.id.tvtempat);
             fotolaporan = itemView.findViewById(R.id.imglaporan);
             cardView = itemView.findViewById(R.id.cvkegiatan);
+            linearhapus = itemView.findViewById(R.id.lldelete);
 
 
         }
     }
+
+
+
+
+
+
 }

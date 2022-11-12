@@ -32,6 +32,7 @@ import com.example.pendaftaran.Services.Preferences;
 import com.example.pendaftaran.Services.Service;
 import com.example.pendaftaran.Surat.SuratActivity;
 import com.example.pendaftaran.dashboard.Model.SuratKeluarItem;
+import com.example.pendaftaran.dashboard.Model.suratmasuk.SuratMasukItem;
 import com.example.pendaftaran.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.synnapps.carouselview.CarouselView;
@@ -58,12 +59,14 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     int[] sampleImages = {R.drawable.a, R.drawable.b, R.drawable.c};
     CarouselView banner;
     FloatingActionButton pesanbaru;
-    RecyclerView recyclerViewsurat;
+    RecyclerView recyclerViewsurat, recyclerViewTerima;
     String iduser;
     Preferences preferences;
     ArrayList<SuratKeluarItem> suratKeluarItems = new ArrayList<>();
+    ArrayList<SuratMasukItem> suratMasukItems = new ArrayList<>();
     DashboardSuratAdapter dashboardSuratAdapter;
     TextView jumlahsuratkirim, jumlahsuratterima, nama, keluar;
+
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -115,8 +118,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         jumlahsuratterima = view.findViewById(R.id.tvjumlahterima);
         nama = view.findViewById(R.id.tvnama);
         keluar = view.findViewById(R.id.tvkeluar);
+        recyclerViewTerima  = view.findViewById(R.id.rvditerima);
 
-        preferences = new Preferences(getContext());
+        preferences = new Preferences(getActivity());
 
         pesanbaru.setOnClickListener(this);
 //        banner.setPageCount(sampleImages.length);
@@ -131,7 +135,57 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
         prosesListSurat();
         prosesJumlahSurat();
+        prosesSuratDiterima();
 
+    }
+
+    private void prosesSuratDiterima() {
+        AndroidNetworking.get(Service.URL + Service.suratmasuk+iduser)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d(TAG, "terima: " + response);
+
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("surat_masuk");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                SuratMasukItem suratMasukItem = new SuratMasukItem();
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                suratMasukItem.setNoSurat(jsonObject.getString("no_surat"));
+                                suratMasukItem.setNamaPerihal(jsonObject.getString("nama_perihal"));
+                                suratMasukItem.setNamaSifat(jsonObject.getString("nama_sifat"));
+                                suratMasukItem.setNamaCabang(jsonObject.getString("nama_cabang"));
+                                suratMasukItem.setTglMasuk(jsonObject.getString("tgl_masuk"));
+                                suratMasukItem.setBerkas(jsonObject.getString("berkas"));
+                                suratMasukItem.setIsi(jsonObject.getString("isi"));
+
+
+                                suratMasukItems.add(suratMasukItem);
+
+
+
+                            }
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                            recyclerViewTerima.setLayoutManager(layoutManager);
+
+                            DashboardSuratMasukAdapter dashboardSuratAdapter = new DashboardSuratMasukAdapter(getContext(), suratMasukItems);
+                            recyclerViewTerima.setAdapter(dashboardSuratAdapter);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
     }
 
     private void prosesJumlahSurat() {
@@ -188,14 +242,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
                                 suratKeluarItems.add(suratKeluarItem);
 
-                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                                recyclerViewsurat.setLayoutManager(layoutManager);
 
-                                dashboardSuratAdapter = new DashboardSuratAdapter(getContext(), suratKeluarItems);
-                                recyclerViewsurat.setAdapter(dashboardSuratAdapter);
 
 
                             }
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                            recyclerViewsurat.setLayoutManager(layoutManager);
+
+                            dashboardSuratAdapter = new DashboardSuratAdapter(getContext(), suratKeluarItems);
+                            recyclerViewsurat.setAdapter(dashboardSuratAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

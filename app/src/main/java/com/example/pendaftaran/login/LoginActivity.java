@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText username, password;
     Snackbar snackbar;
     Preferences preferences;
+    String level;
 
 
     @Override
@@ -84,7 +85,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     .make(v, "Lengkapi data terlebih dahulu", Snackbar.LENGTH_LONG);
             snackbar.show();
 
+        } else if (user.equals("kraksaan") || pass.equals("kraksaan")) {
+            level = "1";
+            prosesLogin(v, user, pass);
         } else {
+            level = "2";
             prosesLogin(v, user, pass);
         }
     }
@@ -92,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void prosesLogin(View v, String user, String pass) {
 
         AndroidNetworking.post(Service.URL + Service.login)
-                .addBodyParameter("level", "2")
+                .addBodyParameter("level", level)
                 .addBodyParameter("username", user)
                 .addBodyParameter("password", pass)
                 .setPriority(Priority.MEDIUM)
@@ -108,12 +113,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 preferences.saveBoolean(Preferences.statuslogin, true);
                                 preferences.saveString(Preferences.iduser, iduser);
                                 preferences.saveString(Preferences.namauser, nama);
+                                preferences.saveString(Preferences.level, level);
 
 
                                 snackbar = Snackbar
-                                        .make(v, "Berhasil Login"+iduser, Snackbar.LENGTH_LONG);
+                                        .make(v, "Berhasil Login" + iduser, Snackbar.LENGTH_LONG);
                                 snackbar.show();
-                                Log.d(TAG, "onResponse: "+iduser);
+                                Log.d(TAG, "onResponse: " + iduser);
 
                                 startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                                 finish();

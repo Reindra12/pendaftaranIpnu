@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Preferences {
-    public static final String iduser = "";
+    public static final String iduser = "id_user";
     public static final String appname = "";
     public static final String statuslogin = "login";
     public static final String namauser  = "nama";
+    public static final String level = "";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -40,6 +41,10 @@ public class Preferences {
 
     public String getNamauser(){
         return sharedPreferences.getString(namauser, "");
+    }
+
+    public String getLevel(){
+        return sharedPreferences.getString(level,"");
     }
 
 }

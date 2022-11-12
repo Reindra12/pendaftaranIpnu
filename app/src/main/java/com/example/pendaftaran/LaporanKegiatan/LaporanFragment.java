@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -35,7 +38,7 @@ import java.util.ArrayList;
  * Use the {@link LaporanFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LaporanFragment extends Fragment {
+public class LaporanFragment extends Fragment implements LaporanAdapter.ItemDelete{
 
     RecyclerView recyclerViewlaporan;
     String iduser;
@@ -43,6 +46,8 @@ public class LaporanFragment extends Fragment {
     ArrayList<LaporanItem> laporanItems = new ArrayList<>();
     TextView jumlahkeluar;
     FloatingActionButton fabkegiatan;
+    private NestedScrollView scrollView;
+    private LinearLayout linearLayoutInfo;
 
 
     // TODO: Rename and change types of parameters
@@ -95,12 +100,29 @@ public class LaporanFragment extends Fragment {
 
         jumlahkeluar = view.findViewById(R.id.tvjumlahlaporan);
         fabkegiatan = view.findViewById(R.id.fabkegiatan);
+        linearLayoutInfo = view.findViewById(R.id.llinfouser);
+        scrollView = view.findViewById(R.id.scrollView);
+
+
         preferences = new Preferences(getContext());
         iduser = preferences.getIduser();
 
+        LaporanAdapter adapter = new LaporanAdapter(laporanItems, getContext(), this);
+        adapter.addItemClickListener(this);
 
+
+        if (preferences.getLevel().equals("1")){
+            scrollView.setVisibility(View.GONE);
+            fabkegiatan.setVisibility(View.GONE);
+        }else{
+            linearLayoutInfo.setVisibility(View.GONE);
+
+        }
         dataLaporan();
         jumlahlaporan();
+
+
+
 
         fabkegiatan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +136,7 @@ public class LaporanFragment extends Fragment {
     }
 
     private void jumlahlaporan() {
-        AndroidNetworking.get(Service.URL+Service.jumlahlaporan+iduser)
+        AndroidNetworking.get(Service.URL + Service.jumlahlaporan + iduser)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -136,7 +158,7 @@ public class LaporanFragment extends Fragment {
     }
 
     private void dataLaporan() {
-        AndroidNetworking.get(Service.URL+Service.listlaporan+iduser)
+        AndroidNetworking.get(Service.URL + Service.listlaporan + iduser)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -154,19 +176,53 @@ public class LaporanFragment extends Fragment {
                                 laporanItem.setTempat(jsonObject.getString("tempat"));
                                 laporanItem.setCabangId(jsonObject.getString("cabang_id"));
                                 laporanItem.setKeterangan(jsonObject.getString("keterangan"));
+                                laporanItem.setKegiatanId(jsonObject.getString("kegiatan_id"));
 
                                 laporanItems.add(laporanItem);
 
                             }
 
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                            LaporanAdapter laporanAdapter = new LaporanAdapter(laporanItems, getContext());
+                            LaporanAdapter laporanAdapter = new LaporanAdapter(laporanItems, getContext(), LaporanFragment.this::onItemDelete);
                             recyclerViewlaporan.setLayoutManager(layoutManager);
                             recyclerViewlaporan.setAdapter(laporanAdapter);
-                            
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onItemDelete(String idkegiatan, int position) {
+
+        hapusKegiatan(idkegiatan, position);
+    }
+
+    private void hapusKegiatan(String idkegiatan, int position) {
+        AndroidNetworking.post(Service.URL+Service.HAPUSKEGIATAN+idkegiatan)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(getContext(), "Kegiatan berhasil dihapus", Toast.LENGTH_SHORT).show();
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                        LaporanAdapter laporanAdapter = new LaporanAdapter(laporanItems, getContext(), LaporanFragment.this::onItemDelete);
+                        recyclerViewlaporan.setLayoutManager(layoutManager);
+                        recyclerViewlaporan.setAdapter(laporanAdapter);
+                        laporanAdapter.notifyDataSetChanged();
+                        laporanItems.remove(position);
+                        laporanAdapter.notifyItemRemoved(position);
+
+
+
                     }
 
                     @Override
